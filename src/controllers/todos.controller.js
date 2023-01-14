@@ -1,6 +1,7 @@
 const { Response } = require("../common/index");
+const debug = require("debug")("api:controller");
 const createError = require("http-errors");
-const Todo = require("../models/todo.model").default;
+const Todo = require("../models/todo.model");
 
 // '/'
 const principal = (req, res) => {
@@ -14,15 +15,47 @@ const notFound = (req, res) => {
 	Response.error(res, new createError.NotFound());
 };
 
-const getTodos = (req, res) => {};
+const getTodos = async (req, res) => {
+	const todos = await Todo.find();
+	return res.status(200).json(todos);
+};
 
-const getTodo = (req, res) => {};
+const getTodo = async (req, res) => {
+	const { id } = req.params;
+	const todo = await Todo.findById(id);
+	debug(todo);
+	return res.status(200).json(todo);
+};
 
-const createTodo = (req, res) => {};
+const createTodo = async (req, res) => {
+	const todo = new Todo();
+	todo.title = req.body.title;
+	todo.description = req.body.description;
+	todo.date = req.body.date;
+	await todo.save();
+	return res.status(201).json({ msg: "todo created" });
+};
 
-const deleteTodo = (req, res) => {};
+const deleteTodo = async (req, res) => {
+	const { id } = req.params;
+	try {
+		await Todo.deleteOne({ _id: id });
+		return res.status(200).send("todo deleted");
+	} catch (error) {
+		return res.status(500).send("Error deleting todo");
+	}
+};
 
-const updateTodo = (req, res) => {};
+const updateTodo = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const { title, description, date } = req.body;
+		await Todo.findByIdAndUpdate(id, { title, description, date });
+		return res.status(200).send("Todo updated");
+	} catch (error) {
+		return res.status(500).send("Error updating todo");
+	}
+};
 
 module.exports = {
 	principal,
