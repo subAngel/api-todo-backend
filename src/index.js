@@ -10,7 +10,7 @@ const app = express();
 require("./database");
 
 // settings
-app.set("port", process.env.PORT);
+app.set("port", process.env.PORT || 4000);
 
 // middlewares
 app.use(morgan("dev"));
