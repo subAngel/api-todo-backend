@@ -28,18 +28,22 @@ const getTodo = async (req, res) => {
 };
 
 const createTodo = async (req, res) => {
-	const todo = new Todo();
-	todo.title = req.body.title;
-	todo.description = req.body.description;
-	todo.date = req.body.date;
-	await todo.save();
-	return res.status(201).json({ msg: "todo created" });
+	try {
+		const todo = new Todo();
+		todo.title = req.body.title;
+		todo.description = req.body.description;
+		todo.date = req.body.date;
+		await todo.save();
+		return res.status(201).send(todo);
+	} catch (error) {
+		return res.status(500).send("Error saving todo");
+	}
 };
 
 const deleteTodo = async (req, res) => {
 	const { id } = req.params;
 	try {
-		await Todo.deleteOne({ _id: id });
+		await Todo.findByIdAndDelete(id);
 		return res.status(200).send("todo deleted");
 	} catch (error) {
 		return res.status(500).send("Error deleting todo");
