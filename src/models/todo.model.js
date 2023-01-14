@@ -8,7 +8,7 @@ const todoSchema = new Schema({
 		type: String,
 	},
 	date: {
-		type: Date,
+		type: String,
 	},
 	createdAt: {
 		type: Date,
