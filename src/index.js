@@ -16,10 +16,10 @@ app.set("port", process.env.PORT || 4000);
 
 // middlewares
 app.use(morgan("dev"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride());
-app.use(cors({ origin: ["https://subangel.github.io/todo-list-vue/"] }));
+app.use(cors());
 
 // global variables
 
