@@ -18,14 +18,14 @@ const notFound = (req, res) => {
 
 const getTodos = async (req, res) => {
 	const todos = await Todo.find();
-	return res.status(200).send({ todos });
+	return res.status(200).send({ message: todos });
 };
 
 const getTodo = async (req, res) => {
 	const { id } = req.params;
 	const todo = await Todo.findById(id);
 	debug(todo);
-	return res.status(200).json(todo);
+	return res.status(200).send({ message: todo });
 };
 
 const createTodo = async (req, res) => {
