@@ -18,7 +18,7 @@ const notFound = (req, res) => {
 
 const getTodos = async (req, res) => {
 	const todos = await Todo.find();
-	return res.status(200).json(todos);
+	return res.status(200).send({ todos });
 };
 
 const getTodo = async (req, res) => {
