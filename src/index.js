@@ -19,7 +19,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
-app.use(cors());
+app.use(cors({ origin: ["https://subangel.github.io/todo-list-vue/"] }));
 
 // global variables
 
